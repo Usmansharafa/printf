@@ -10,5 +10,7 @@ int _strlen(char *s);
 int _putchar(char c);
 int print_number(int n);
 int print_unsigned_num(unsigned int n);
+int print_int(int n);
+int print_unsigned_int(unsigned int n);
 
 #endif /* MAIN_H */
