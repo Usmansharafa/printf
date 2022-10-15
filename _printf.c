@@ -23,6 +23,12 @@ int _printf(const char *format, ...)
 			case 'c':
 				len += _putchar((char)va_arg(args, int));
 				break;
+			case 'd':
+				len += print_number(va_arg(args, int));
+				break;
+			case 'i':
+				len += print_number(va_arg(args, unsigned int));
+				break;
 			case 's':
 				len += print_str(va_arg(args, char *));
 				break;
