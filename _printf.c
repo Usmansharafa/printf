@@ -3,7 +3,7 @@
 
 /**
  * _printf - Prints to the stdout
- * @format - What is to be printed
+ * @format: What is to be printed
  * @...: Argument to be substituted in if necessary
  * Return: Length of printed output
  */
