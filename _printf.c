@@ -26,6 +26,9 @@ int _printf(const char *format, ...)
 			case 's':
 				len += print_str(va_arg(args, char *));
 				break;
+			case '%':
+				len += print_char('%');
+				break;
 			default:
 				break;
 			}
