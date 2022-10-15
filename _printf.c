@@ -11,7 +11,6 @@ int _printf(const char *format, ...)
 {
 	va_list args;
 	int len = 0, i = 0;
-	char temp[4];
 
 	va_start(args, format);
 	while (format && format[i])
@@ -31,6 +30,8 @@ int _printf(const char *format, ...)
 				break;
 			}
 		}
+		else
+			len += print_char(format[i]);
 		i++;
 	}
 	va_end(args);
