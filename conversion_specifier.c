@@ -1,4 +1,5 @@
 #include <unistd.h>
+#include <stdlib.h>
 #include "main.h"
 /**
  * _putchar - Prints a character to stdout
@@ -19,12 +20,11 @@ int print_str(char *s)
 {
 	int len = 0, i;
 
-	if (s)
-	{
-		len = _strlen(s);
-		for (i = 0; i < len; i++)
-			_putchar(s[i]);
-	}
+	if (s == NULL)
+		s = "(null)";
+	len = _strlen(s);
+	for (i = 0; i < len; i++)
+		_putchar(s[i]);
 	return (len);
 }
 
