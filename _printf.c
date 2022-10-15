@@ -21,20 +21,20 @@ int _printf(const char *format, ...)
 			switch (format[i])
 			{
 			case 'c':
-				len += print_char((char)va_arg(args, int));
+				len += _putchar((char)va_arg(args, int));
 				break;
 			case 's':
 				len += print_str(va_arg(args, char *));
 				break;
 			case '%':
-				len += print_char('%');
+				len += _putchar('%');
 				break;
 			default:
 				break;
 			}
 		}
 		else
-			len += print_char(format[i]);
+			len += _putchar(format[i]);
 		i++;
 	}
 	va_end(args);
