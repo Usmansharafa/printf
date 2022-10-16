@@ -39,6 +39,24 @@ int _printf(const char *format, ...)
 				break;
 			}
 		}
+		else if (format[i] == 92)
+		{
+			i++;
+			switch (format[i])
+			{
+			case 'n':
+				len += _putchar('\n');
+				break;
+			case 't':
+				len += _putchar('\t');
+				break;
+			case '\\':
+				len += _putchar(92);
+				break;
+			default:
+				break;
+			}
+		}
 		else
 			len += _putchar(format[i]);
 		i++;
