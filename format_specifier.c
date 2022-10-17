@@ -1,6 +1,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include "main.h"
+
 /**
  * _putchar - Prints a character to stdout
  * @c: Character to be printed
@@ -12,13 +13,26 @@ int _putchar(char c)
 }
 
 /**
+ * print_char - Prints a character to stdout
+ * arg: List of arguments
+ * Return: 1
+ */
+int print_char(va_list arg)
+{
+	char c = va_arg(arg, int);
+
+	return (_putchar(c));
+}
+
+/**
  * print_str - Prints a string to the stdout
- * @s: String to be printed
+ * @arg: List of arguments
  * Return: Length of the printed string
  */
-int print_str(char *s)
+int print_str(va_list arg)
 {
 	int len = 0, i;
+	char *s = va_arg(arg, char *);
 
 	if (s == NULL)
 		s = "(null)";
@@ -26,6 +40,15 @@ int print_str(char *s)
 	for (i = 0; i < len; i++)
 		_putchar(s[i]);
 	return (len);
+}
+
+/**
+ * print_percent - Prints a % character to stdout
+ * Return: 1
+ */
+int print_percent(__attribute__((unused)) va_list arg)
+{
+	return (_putchar('%'));
 }
 
 /**
@@ -43,28 +66,65 @@ int _strlen(char *s)
 }
 
 /**
- * print_int - Prints an integer
- * @n: Integer to be printed
+ * print_int - Prints an integer to stdout
+ * @arg: List of arguments
  * Return: Number of digits in n
  */
-int print_int(int n)
+int print_int(va_list arg)
 {
 	int len;
+	int n = va_arg(arg, int);
 
 	len = print_number(n);
 	return (len);
 }
 
 /**
- * print_unsigned_int - Prints and unsigned integer
- * @n: Unsigned integer to be printed
- * Return: Number of digits in n
+ * print_unsigned_int - Prints and unsigned integer to stdout
+ * @arg: List of argument
+ * Return: Number of digits printed out
  */
-int print_unsigned_int(unsigned int n)
+int print_unsigned_int(va_list arg)
 {
+	unsigned int n = va_arg(arg, unsigned int);
+
 	if (n == 0)
 		return (print_unsigned_num(n));
 	if (n < 1)
 		return (-1);
 	return (print_unsigned_num(n));
+}
+
+/**
+ * print_binary - Prints a binary digit to stdout
+ * @arg: List of arguments
+ * Return: Number of digits printed out
+ */
+int print_binary(va_list arg)
+{
+	unsigned int num = va_arg(arg, unsigned int);
+	char *digit;
+	int i, len;
+
+	if (num == 0)
+		return (_putchar('0'));
+	if (num < 1)
+		return (-1);
+	len = base_len(num, 2);
+	digit = malloc(sizeof(char) * len + 1);
+	if (digit == NULL)
+		return (-1);
+
+	for (i = 0; num > 0; i++)
+	{
+		if (num % 2 == 0)
+			digit[i] = '0';
+		else
+			digit[i] = '1';
+		num = num / 2;
+	}
+	digit[i] = '\0';
+	print_rev(digit);
+	free(digit);
+	return (len);
 }

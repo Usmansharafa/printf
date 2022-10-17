@@ -49,9 +49,6 @@ int _printf(const char *format, ...)
 			case 'n':
 				len += _putchar('\n');
 				break;
-			case 't':
-				len += _putchar('\t');
-				break;
 			case '\\':
 				len += _putchar(92);
 				break;
