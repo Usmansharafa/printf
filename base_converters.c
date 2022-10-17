@@ -9,6 +9,7 @@ int print_binary(va_list arg)
 {
 	unsigned int num = va_arg(arg, unsigned int);
 	char *digit;
+	char *rev_digit;
 	int i, len;
 
 	if (num == 0)
@@ -29,7 +30,12 @@ int print_binary(va_list arg)
 		num = num / 2;
 	}
 	digit[i] = '\0';
-	print_rev(digit);
+	rev_digit = malloc(sizeof(char) * len + 1);
+	if (rev_digit == NULL)
+		return (-1);
+	rev_digit = rev_string(digit);
+	print_base(rev_digit);
+	free(rev_digit);
 	free(digit);
 	return (len);
 }
@@ -41,11 +47,10 @@ int print_binary(va_list arg)
  */
 int print_octal(va_list arg)
 {
-	unsigned int num;
+	unsigned int num = va_arg(arg, unsigned int);
 	int len;
 	char *octal_rep;
-
-	num = va_arg(arg, unsigned int);
+	char *rev_octal;
 
 	if (num == 0)
 		return (_putchar('0'));
@@ -62,8 +67,13 @@ int print_octal(va_list arg)
 		num = num / 8;
 	}
 	octal_rep[len] = '\0';
-	print_rev(octal_rep);
+	rev_octal = malloc(sizeof(char) * len + 1);
+	if (rev_octal == NULL)
+		return (-1);
+	rev_octal = rev_string(octal_rep);
+	print_base(rev_octal);
 	free(octal_rep);
+	free(rev_octal);
 	return (len);
 }
 
@@ -74,12 +84,11 @@ int print_octal(va_list arg)
  */
 int print_hex(va_list arg)
 {
-	unsigned int num;
+	unsigned int num = va_arg(arg, unsigned int);
 	int len;
 	int rem_num;
 	char *hex_rep;
-
-	num = va_arg(arg, unsigned int);
+	char *rev_hex;
 
 	if (num == 0)
 		return (_putchar('0'));
@@ -102,7 +111,12 @@ int print_hex(va_list arg)
 		num = num / 16;
 	}
 	hex_rep[len] = '\0';
-	print_rev(hex_rep);
+	rev_hex = malloc(sizeof(char) * len + 1);
+	if (rev_hex == NULL)
+		return (-1);
+	rev_hex = rev_string(hex_rep);
+	print_base(rev_hex);
+	free(rev_hex);
 	free(hex_rep);
 	return (len);
 }
@@ -114,12 +128,11 @@ int print_hex(va_list arg)
  */
 int print_heX(va_list arg)
 {
-	unsigned int num;
+	unsigned int num = va_arg(arg, unsigned int);
 	int len;
 	int rem_num;
 	char *hex_rep;
-
-	num = va_arg(arg, unsigned int);
+	char *rev_hex;
 
 	if (num == 0)
 		return (_putchar('0'));
@@ -142,7 +155,12 @@ int print_heX(va_list arg)
 		num = num / 16;
 	}
 	hex_rep[len] = '\0';
-	print_rev(hex_rep);
+	rev_hex = malloc(sizeof(char) * len + 1);
+	if (rev_hex == NULL)
+		return (-1);
+	rev_hex = rev_string(hex_rep);
+	print_base(rev_hex);
+	free(rev_hex);
 	free(hex_rep);
 	return (len);
 }

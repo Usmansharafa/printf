@@ -32,28 +32,60 @@ unsigned int base_len(unsigned int num, int base)
  * print_rev - Prints a string in reverse
  * @s: string to be printed in reverse
  */
-void print_rev(char *s)
+void print_base(char *s)
 {
-	int j, len;
+	int j;
 
-	len = _strlen(s);
-	j = len - 1;
-	for (; j >= 0; --j)
+	for (j = 0; s[j] != '\0'; j++)
 	{
 		_putchar(s[j]);
 	}
 }
 
 /**
- * _strlen - Gets the length of string s
- * @s: String whose length is to be found
- * Return: Length of string s
+ * rev_string - reverses a string in place
+ *
+ * @s: string to reverse
+ * Return: A pointer to a character
  */
-int _strlen(char *s)
+char *rev_string(char *s)
 {
 	int len;
+	int head;
+	char tmp;
+	char *dest;
 
-	for (len = 0; s[len] != '\0'; ++len)
-		;
-	return (len);
+	for (len = 0; s[len] != '\0'; len++)
+	{
+	}
+
+	dest = malloc(sizeof(char) * len + 1);
+	if (dest == NULL)
+		return (NULL);
+
+	_memcpy(dest, s, len);
+	for (head = 0; head < len; head++, len--)
+	{
+		tmp = dest[len - 1];
+		dest[len - 1] = dest[head];
+		dest[head] = tmp;
+	}
+	return (dest);
+}
+
+/**
+ * _memcpy - copy memory area
+ * @dest: Destination for copying
+ * @src: Source to copy from
+ * @n: The number of bytes to copy
+ * Return: The _memcpy() function returns a pointer to dest.
+ */
+char *_memcpy(char *dest, char *src, unsigned int n)
+{
+	unsigned int i;
+
+	for (i = 0; i < n; i++)
+		dest[i] = src[i];
+	dest[i] = '\0';
+	return (dest);
 }
