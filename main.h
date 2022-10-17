@@ -13,17 +13,11 @@ int print_number(int n);
 int print_unsigned_num(unsigned int n);
 int print_int(va_list arg);
 int print_percent(va_list arg);
-void print_base(char *s);
+void print_rev(char *s);
 int print_unsigned_int(va_list arg);
 int print_reversed(va_list arg);
 int print_binary(va_list arg);
-int print_octal(va_list arg);
-int print_hex(va_list arg);
-int print_heX(va_list arg);
-int hex_check(int num, char x);
 unsigned int base_len(unsigned int num, int base);
-char *rev_string(char *s);
-char *_memcpy(char *dest, char *src, unsigned int n);
 
 /**
  * struct printer - Data structure to link a format specifier
