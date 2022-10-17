@@ -29,14 +29,15 @@ unsigned int base_len(unsigned int num, int base)
 }
 
 /**
- * print_rev - Prints a string in reverse
+ * print_base - Prints a string in reverse
  * @s: string to be printed in reverse
  */
 void print_base(char *s)
 {
-	int j;
+	int j, len;
 
-	for (j = 0; s[j] != '\0'; j++)
+	len = _strlen(s);
+	for (; j >= 0; --j)
 	{
 		_putchar(s[j]);
 	}

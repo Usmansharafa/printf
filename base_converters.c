@@ -9,7 +9,6 @@ int print_binary(va_list arg)
 {
 	unsigned int num = va_arg(arg, unsigned int);
 	char *digit;
-	char *rev_digit;
 	int i, len;
 
 	if (num == 0)
@@ -30,12 +29,7 @@ int print_binary(va_list arg)
 		num = num / 2;
 	}
 	digit[i] = '\0';
-	rev_digit = malloc(sizeof(char) * len + 1);
-	if (rev_digit == NULL)
-		return (-1);
-	rev_digit = rev_string(digit);
-	print_base(rev_digit);
-	free(rev_digit);
+	print_base(digit);
 	free(digit);
 	return (len);
 }
