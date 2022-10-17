@@ -2,10 +2,10 @@
 
 /**
  * parser - Receives the main string and all the necessary parameters to
- * print a formated string.
+ * print a formatted string.
  * @format: A string containing all the desired characters.
- * @f_list: A list of all the posible functions.
- * @arg_list: A list containing all the argumentents passed to the program.
+ * @f_list: A list of all the possible functions.
+ * @arg_list: A list containing all the arguments passed to the program.
  * Return: A total count of the characters printed.
  */
 int parser(const char *format, convert_t f_list[], va_list arg_list)
