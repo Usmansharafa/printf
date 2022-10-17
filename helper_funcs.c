@@ -34,9 +34,9 @@ unsigned int base_len(unsigned int num, int base)
  */
 void print_base(char *s)
 {
-	int j, len;
+	int j;
 
-	len = _strlen(s);
+	j = _strlen(s);
 	for (; j >= 0; --j)
 	{
 		_putchar(s[j]);
