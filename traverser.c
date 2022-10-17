@@ -31,9 +31,8 @@ int traverser(const char *format, printer_t funcs[], va_list args)
 			{
 				if (format[i + 1] != '\0')
 				{
-					_putchar(format[i]);
 					_putchar(format[i + 1]);
-					len += 2;
+					len++;
 				}
 				else
 					return (-1);
