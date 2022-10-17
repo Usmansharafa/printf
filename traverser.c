@@ -12,7 +12,7 @@ int traverser(const char *format, printer_t funcs[], va_list args)
 {
 	int len, temp, i = 0, j;
 
-	while (format && format[i])
+	for (i = 0; format[i] != '\0'; i++)
 	{
 		if (format[i] == '%')
 		{
@@ -38,21 +38,13 @@ int traverser(const char *format, printer_t funcs[], va_list args)
 				else
 					return (-1);
 			}
-			i = i + 1;
-		}
-		else if (format[i] == 92)
-		{
-			i++;
-			switch (format[i])
-			{
-			case 'n':
-				len += _putchar('\n');
-				break;
-			}
+			i += 1;
 		}
 		else
-			len += _putchar(format[i]);
-		i++;
+		{
+			_putchar(format[i]);
+			len++;
+		}
 	}
 	return (len);
 }
