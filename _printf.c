@@ -10,56 +10,21 @@
 int _printf(const char *format, ...)
 {
 	va_list args;
-	int len = 0, i = 0;
+	int len;
+	printer_t funcs[] = {
+	    {"c", print_char},
+	    {"s", print_str},
+	    {"d", print_int},
+	    {"i", print_int},
+	    {"%", print_percent},
+	    {"b", print_binary},
+	    {"u", print_unsigned_int},
+	    {NULL, NULL}};
 
 	if (format == NULL)
 		return (-1);
 	va_start(args, format);
-	while (format && format[i])
-	{
-		if (format[i] == '%')
-		{
-			i++;
-			switch (format[i])
-			{
-			case 'c':
-				len += _putchar((char)va_arg(args, int));
-				break;
-			case 'd':
-				len += print_int(va_arg(args, int));
-				break;
-			case 'i':
-				len += print_int(va_arg(args, int));
-				break;
-			case 's':
-				len += print_str(va_arg(args, char *));
-				break;
-			case '%':
-				len += _putchar('%');
-				break;
-			default:
-				break;
-			}
-		}
-		else if (format[i] == 92)
-		{
-			i++;
-			switch (format[i])
-			{
-			case 'n':
-				len += _putchar('\n');
-				break;
-			case '\\':
-				len += _putchar(92);
-				break;
-			default:
-				break;
-			}
-		}
-		else
-			len += _putchar(format[i]);
-		i++;
-	}
+	len = traverser(format, funcs, args);
 	va_end(args);
 	return (len);
 }
