@@ -1,14 +1,47 @@
 #include "main.h"
-#include <unistd.h>
+#include <stdio.h>
 
 /**
- * _putchar - Prints a character to stdout
- * @c: Character to be printed
- * Return: 1
+ * rev_string - reverses a string in place
+ *
+ * @s: string to reverse
+ * Return: A pointer to a character
  */
-int _putchar(char c)
+char *rev_string(char *s)
 {
-	return (write(1, &c, 1));
+	int len;
+	int head;
+	char tmp;
+	char *dest;
+
+	for (len = 0; s[len] != '\0'; len++)
+	{
+	}
+
+	dest = malloc(sizeof(char) * len + 1);
+	if (dest == NULL)
+		return (NULL);
+
+	_memcpy(dest, s, len);
+	for (head = 0; head < len; head++, len--)
+	{
+		tmp = dest[len - 1];
+		dest[len - 1] = dest[head];
+		dest[head] = tmp;
+	}
+	return (dest);
+}
+
+/**
+ * write_base - sends characters to be written on standard output
+ * @str: String to parse
+ */
+void write_base(char *str)
+{
+	int i;
+
+	for (i = 0; str[i] != '\0'; i++)
+		_write_char(str[i]);
 }
 
 /**
@@ -29,31 +62,18 @@ unsigned int base_len(unsigned int num, int base)
 }
 
 /**
- * print_rev - Prints a string in reverse
- * @s: string to be printed in reverse
+ * _memcpy - copy memory area
+ * @dest: Destination for copying
+ * @src: Source to copy from
+ * @n: The number of bytes to copy
+ * Return: The _memcpy() function returns a pointer to dest.
  */
-void print_rev(char *s)
+char *_memcpy(char *dest, char *src, unsigned int n)
 {
-	int j, len;
+	unsigned int i;
 
-	len = _strlen(s);
-	j = len - 1;
-	for (; j >= 0; --j)
-	{
-		_putchar(s[j]);
-	}
-}
-
-/**
- * _strlen - Gets the length of string s
- * @s: String whose length is to be found
- * Return: Length of string s
- */
-int _strlen(char *s)
-{
-	int len;
-
-	for (len = 0; s[len] != '\0'; ++len)
-		;
-	return (len);
+	for (i = 0; i < n; i++)
+		dest[i] = src[i];
+	dest[i] = '\0';
+	return (dest);
 }

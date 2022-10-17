@@ -1,72 +1,72 @@
-#include <stdlib.h>
 #include "main.h"
-
 /**
- * print_char - Prints a character to stdout
- * @arg: List of arguments
- * Return: 1
+ * print_char - Prints character
+ * @list: list of arguments
+ * Return: Will return the amount of characters printed.
  */
-int print_char(va_list arg)
+int print_char(va_list list)
 {
-	char c = va_arg(arg, int);
-
-	return (_putchar(c));
+	_write_char(va_arg(list, int));
+	return (1);
 }
 
 /**
- * print_str - Prints a string to the stdout
- * @arg: List of arguments
- * Return: Length of the printed string
+ * print_string - Prints a string
+ * @list: list of arguments
+ * Return: Will return the amount of characters printed.
  */
-int print_str(va_list arg)
+int print_string(va_list list)
 {
-	int len = 0, i;
-	char *s = va_arg(arg, char *);
+	int i;
+	char *str;
 
-	if (s == NULL)
-		s = "(null)";
-	len = _strlen(s);
-	for (i = 0; i < len; i++)
-		_putchar(s[i]);
-	return (len);
+	str = va_arg(list, char *);
+	if (str == NULL)
+		str = "(null)";
+	for (i = 0; str[i] != '\0'; i++)
+		_write_char(str[i]);
+	return (i);
 }
 
 /**
- * print_percent - Prints a % character to stdout
- * @arg: List of arguments
- * Return: 1
+ * print_percent - Prints a percent symbol
+ * @list: list of arguments
+ * Return: Will return the amount of characters printed.
  */
-int print_percent(__attribute__((unused)) va_list arg)
+int print_percent(__attribute__((unused)) va_list list)
 {
-	return (_putchar('%'));
+	_write_char('%');
+	return (1);
 }
 
 /**
- * print_int - Prints an integer to stdout
- * @arg: List of arguments
- * Return: Number of digits in n
+ * print_integer - Prints an integer
+ * @list: list of arguments
+ * Return: Will return the amount of characters printed.
  */
-int print_int(va_list arg)
+int print_integer(va_list list)
 {
-	int len;
-	int n = va_arg(arg, int);
+	int num_length;
 
-	len = print_number(n);
-	return (len);
+	num_length = print_number(list);
+	return (num_length);
 }
 
 /**
- * print_unsigned_int - Prints and unsigned integer to stdout
- * @arg: List of argument
- * Return: Number of digits printed out
+ * unsigned_integer - Prints Unsigned integers
+ * @list: List of all of the argumets
+ * Return: a count of the numbers
  */
-int print_unsigned_int(va_list arg)
+int unsigned_integer(va_list list)
 {
-	unsigned int n = va_arg(arg, unsigned int);
+	unsigned int num;
 
-	if (n == 0)
-		return (print_unsigned_num(n));
-	if (n < 1)
+	num = va_arg(list, unsigned int);
+
+	if (num == 0)
+		return (print_unsgined_number(num));
+
+	if (num < 1)
 		return (-1);
-	return (print_unsigned_num(n));
+	return (print_unsgined_number(num));
 }
