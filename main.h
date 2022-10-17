@@ -17,6 +17,10 @@ void print_rev(char *s);
 int print_unsigned_int(va_list arg);
 int print_reversed(va_list arg);
 int print_binary(va_list arg);
+int print_octal(va_list arg);
+int print_hex(va_list arg);
+int print_heX(va_list arg);
+int hex_check(int num, char x);
 unsigned int base_len(unsigned int num, int base);
 
 /**
