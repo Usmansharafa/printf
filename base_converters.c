@@ -1,192 +1,103 @@
 #include "main.h"
-#include <stdio.h>
 
-int hex_check(int, char);
-
-/**
- * print_binary - Converts a number from base 10 to binary
- * @list: List of arguments passed to this function
- * Return: The length of the number printed
- */
-int print_binary(va_list list)
-{
-	unsigned int num;
-	int i, len;
-	char *str;
-	char *rev_str;
-
-	num = va_arg(list, unsigned int);
-	if (num == 0)
-		return (_write_char('0'));
-	if (num < 1)
-		return (-1);
-	len = base_len(num, 2);
-	str = malloc(sizeof(char) * len + 1);
-	if (str == NULL)
-		return (-1);
-
-	for (i = 0; num > 0; i++)
-	{
-		if (num % 2 == 0)
-			str[i] = '0';
-		else
-			str[i] = '1';
-		num = num / 2;
-	}
-	str[i] = '\0';
-	rev_str = rev_string(str);
-	if (rev_str == NULL)
-		return (-1);
-	write_base(rev_str);
-	free(str);
-	free(rev_str);
-	return (len);
-}
+unsigned int convert_sbase(buffer_t *output, long int num, char *base,
+			   unsigned char flags, int wid, int prec);
+unsigned int convert_ubase(buffer_t *output,
+			   unsigned long int num, char *base,
+			   unsigned char flags, int wid, int prec);
 
 /**
- * print_octal - Prints the numeric representation of a number in octal base
- * @list: List of all the arguments passed to the program
- * Return: Number of symbols printed to stdout
+ * convert_sbase - Converts a signed long to an inputted base and stores
+ *                 the result to a buffer contained in a struct.
+ * @output: A buffer_t struct containing a character array.
+ * @num: A signed long to be converted.
+ * @base: A pointer to a string containing the base to convert to.
+ * @flags: Flag modifiers.
+ * @wid: A width modifier.
+ * @prec: A precision modifier.
+ *
+ * Return: The number of bytes stored to the buffer.
  */
-int print_octal(va_list list)
+unsigned int convert_sbase(buffer_t *output, long int num, char *base,
+			   unsigned char flags, int wid, int prec)
 {
-	unsigned int num;
-	int len;
-	char *octal_rep;
-	char *rev_str;
+	int size;
+	char digit, pad = '0';
+	unsigned int ret = 1;
 
-	num = va_arg(list, unsigned int);
+	for (size = 0; *(base + size);)
+		size++;
 
-	if (num == 0)
-		return (_write_char('0'));
-	if (num < 1)
-		return (-1);
-	len = base_len(num, 8);
+	if (num >= size || num <= -size)
+		ret += convert_sbase(output, num / size, base,
+				     flags, wid - 1, prec - 1);
 
-	octal_rep = malloc(sizeof(char) * len + 1);
-	if (octal_rep == NULL)
-		return (-1);
-	for (len = 0; num > 0; len++)
-	{
-		octal_rep[len] = (num % 8) + 48;
-		num = num / 8;
-	}
-	octal_rep[len] = '\0';
-	rev_str = rev_string(octal_rep);
-	if (rev_str == NULL)
-		return (-1);
-
-	write_base(rev_str);
-	free(octal_rep);
-	free(rev_str);
-	return (len);
-}
-
-/**
- * print_hex - Prints a representation of a decimal number on base16 lowercase
- * @list: List of the arguments passed to the function
- * Return: Number of characters printed
- */
-int print_hex(va_list list)
-{
-	unsigned int num;
-	int len;
-	int rem_num;
-	char *hex_rep;
-	char *rev_hex;
-
-	num = va_arg(list, unsigned int);
-
-	if (num == 0)
-		return (_write_char('0'));
-	if (num < 1)
-		return (-1);
-	len = base_len(num, 16);
-	hex_rep = malloc(sizeof(char) * len + 1);
-	if (hex_rep == NULL)
-		return (-1);
-	for (len = 0; num > 0; len++)
-	{
-		rem_num = num % 16;
-		if (rem_num > 9)
-		{
-			rem_num = hex_check(rem_num, 'x');
-			hex_rep[len] = rem_num;
-		}
-		else
-			hex_rep[len] = rem_num + 48;
-		num = num / 16;
-	}
-	hex_rep[len] = '\0';
-	rev_hex = rev_string(hex_rep);
-	if (rev_hex == NULL)
-		return (-1);
-	write_base(rev_hex);
-	free(hex_rep);
-	free(rev_hex);
-	return (len);
-}
-
-/**
- * print_heX - Prints a representation of a decimal number on base16 Uppercase
- * @list: List of the arguments passed to the function
- * Return: Number of characters printed
- */
-int print_heX(va_list list)
-{
-	unsigned int num;
-	int len;
-	int rem_num;
-	char *hex_rep;
-	char *rev_hex;
-
-	num = va_arg(list, unsigned int);
-
-	if (num == 0)
-		return (_write_char('0'));
-	if (num < 1)
-		return (-1);
-	len = base_len(num, 16);
-	hex_rep = malloc(sizeof(char) * len + 1);
-	if (hex_rep == NULL)
-		return (-1);
-	for (len = 0; num > 0; len++)
-	{
-		rem_num = num % 16;
-		if (rem_num > 9)
-		{
-			rem_num = hex_check(rem_num, 'X');
-			hex_rep[len] = rem_num;
-		}
-		else
-			hex_rep[len] = rem_num + 48;
-		num = num / 16;
-	}
-	hex_rep[len] = '\0';
-	rev_hex = rev_string(hex_rep);
-	if (rev_hex == NULL)
-		return (-1);
-	write_base(rev_hex);
-	free(hex_rep);
-	free(rev_hex);
-	return (len);
-}
-
-/**
- * hex_check - Checks which hex function is calling it
- * @num: Number to convert into letter
- * @x: Tells which hex function is calling it
- * Return: Ascii value for a letter
- */
-int hex_check(int num, char x)
-{
-	char *hex = "abcdef";
-	char *Hex = "ABCDEF";
-
-	num = num - 10;
-	if (x == 'x')
-		return (hex[num]);
 	else
-		return (Hex[num]);
-	return (0);
+	{
+		for (; prec > 1; prec--, wid--) /* Handle precision */
+			ret += _memcpy(output, &pad, 1);
+
+		if (NEG_FLAG == 0) /* Handle width */
+		{
+			pad = (ZERO_FLAG == 1) ? '0' : ' ';
+			for (; wid > 1; wid--)
+				ret += _memcpy(output, &pad, 1);
+		}
+	}
+
+	digit = base[(num < 0 ? -1 : 1) * (num % size)];
+	_memcpy(output, &digit, 1);
+
+	return (ret);
+}
+
+/**
+ * convert_ubase - Converts an unsigned long to an inputted base and
+ *                 stores the result to a buffer contained in a struct.
+ * @output: A buffer_t struct containing a character array.
+ * @num: An unsigned long to be converted.
+ * @base: A pointer to a string containing the base to convert to.
+ * @flags: Flag modifiers.
+ * @wid: A width modifier.
+ * @prec: A precision modifier.
+ *
+ * Return: The number of bytes stored to the buffer.
+ */
+unsigned int convert_ubase(buffer_t *output, unsigned long int num, char *base,
+			   unsigned char flags, int wid, int prec)
+{
+	unsigned int size, ret = 1;
+	char digit, pad = '0', *lead = "0x";
+
+	for (size = 0; *(base + size);)
+		size++;
+
+	if (num >= size)
+		ret += convert_ubase(output, num / size, base,
+				     flags, wid - 1, prec - 1);
+
+	else
+	{
+		if (((flags >> 5) & 1) == 1) /* Printing a ptr address */
+		{
+			wid -= 2;
+			prec -= 2;
+		}
+		for (; prec > 1; prec--, wid--) /* Handle precision */
+			ret += _memcpy(output, &pad, 1);
+
+		if (NEG_FLAG == 0) /* Handle width */
+		{
+			pad = (ZERO_FLAG == 1) ? '0' : ' ';
+			for (; wid > 1; wid--)
+				ret += _memcpy(output, &pad, 1);
+		}
+		if (((flags >> 5) & 1) == 1) /* Print 0x for ptr address */
+			ret += _memcpy(output, lead, 2);
+	}
+
+	digit = base[(num % size)];
+	_memcpy(output, &digit, 1);
+
+	return (ret);
 }
